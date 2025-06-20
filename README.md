@@ -1,4 +1,4 @@
-# 📊 Google Analytics 4 Data Fetcher
+# 📊 Google Analytics 4 Data Exporter
 
 ## Technologies Used
 
