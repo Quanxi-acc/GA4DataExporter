@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>Debug;Release;Rebuild</Configurations>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="RenaudSheetDataExporter.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.105.0" />
+		<PackageReference Include="Google.Apis.Sheets.v4" Version="1.69.0.3785" />
+		<PackageReference Include="Google.Analytics.Data.V1Beta" Version="2.0.0-beta09" />
+		
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties oogarden-ga4-edbc9bbe57a0_1json__JsonSchema="https://api.app-prg1.zerops.io/api/rest/public/settings/import-project-yml-json-schema.json" />
+		</VisualStudio>
+	</ProjectExtensions>
+
+</Project>

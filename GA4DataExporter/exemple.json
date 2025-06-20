@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "oogarden-ga4",
+  "private_key_id": "XXXXXSECRETXXXXXXX",
+  "private_key": "-----BEGIN PRIVATE KEY-----\XXXXXxxSECRETxxXXXXXX\n-----END PRIVATE KEY-----\n",
+  "client_email": "batch-713@oogarden-ga4.iam.gserviceaccount.com",
+  "client_id": "XXXXXXXXX",
+  "auth_uri": "XXXX",
+  "token_uri": "XXXX",
+  "auth_provider_x509_cert_url": "XXXXX",
+  "client_x509_cert_url": "XXXXX",
+  "universe_domain": "googleapis.com"
+}
