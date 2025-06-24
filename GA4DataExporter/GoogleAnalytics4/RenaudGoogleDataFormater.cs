@@ -5,11 +5,11 @@ namespace GoogleAnalytics4
 {
     public class RenaudGoogleDataFormater : IGoogleDataFormater
     {
-        public IGoogleRecord Format(RunReportResponse generalResponse, RunReportResponse webperfResponse)
+        public IGoogleRecord Format(RunReportResponse generalMetrics, RunReportResponse webperfMetrics)
         {
             var results = new RenaudRecord();
 
-            foreach (var row in generalResponse.Rows)
+            foreach (var row in generalMetrics.Rows)
             {
                 string device = row.DimensionValues[0].Value;
 
@@ -22,7 +22,7 @@ namespace GoogleAnalytics4
                 results.SessionsParAppareil[device] = sessions;
             }
 
-            foreach (var row in webperfResponse.Rows)
+            foreach (var row in webperfMetrics.Rows)
             {
                 string device = row.DimensionValues[0].Value;
 

@@ -1,0 +1,13 @@
+{
+  "installed": {
+    "client_id": "xxxxxxxxxxxxxxxxxxx",
+    "project_id": "oogarden-stagiaire",
+    "auth_uri": "xxxxxxxxxxxxx",
+    "token_uri": "xxxxxxxxxx",
+    "auth_provider_x509_cert_url": "xxxxxxxxxxxx",
+    "client_secret": "xxxxxxxxxx",
+    "redirect_uris": [
+      "http://localhost"
+    ]
+  }
+}

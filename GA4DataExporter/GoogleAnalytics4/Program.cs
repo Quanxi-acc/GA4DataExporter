@@ -1,15 +1,21 @@
-﻿namespace GoogleAnalytics4
+﻿using Google.Apis.Sheets.v4;
+
+namespace GoogleAnalytics4
 {
-    class Program
+    class ExportExcelDataToDriveForRenaud
     {
+        public ExportExcelDataToDriveForRenaud()
+        {
+        }
+
         private static int Main()
         {
             var command = new GoogleDataCommand();
 
-       //   command.outputType = GoogleDataOutputType.ExportExcelRenaud; 
+         // command.outputType = GoogleDataOutputType.ExportExcelRenaud;         // Export vers Excel uniquement
+         // command.outputType = GoogleDataOutputType.ExportGoogleSheetsRenaud;  // Export vers Excel puis Google Sheets
+         // command.outputType = GoogleDataOutputType.ExportWebServiceSage;      // Export vers Sage
 
-            command.outputType = GoogleDataOutputType.ExportWebServiceSage;
- 
             command.Execute();
 
             return 0;

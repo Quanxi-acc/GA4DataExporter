@@ -4,7 +4,7 @@ namespace GoogleAnalytics4
 {
     public interface IGoogleDataFormater
     {
-        IGoogleRecord Format(RunReportResponse genesiteral, RunReportResponse webperf);
+        IGoogleRecord Format(RunReportResponse classicMetrics, RunReportResponse webperfMetrics);
 
         IGoogleRecord Format(RunReportResponse site, int countryId);
     }

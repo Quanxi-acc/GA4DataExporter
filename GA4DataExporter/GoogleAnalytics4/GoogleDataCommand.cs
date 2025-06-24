@@ -1,4 +1,7 @@
-﻿using Google.Analytics.Data.V1Beta;
+﻿using ExcelToGoogle;
+using Google.Analytics.Data.V1Beta;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
 
 namespace GoogleAnalytics4
 {
@@ -6,7 +9,7 @@ namespace GoogleAnalytics4
     {
         ExportWebServiceSage = 1,
         ExportExcelRenaud = 2,
-        ExportSheetToDriveRenaud = 3
+        ExportGoogleSheetsRenaud = 3
     }
 
     public class GoogleDataCommand
@@ -27,6 +30,46 @@ namespace GoogleAnalytics4
                 var googleData = FetchGoogleData();
                 ExportExcelRenaud(googleData);
             }
+            else if (outputType == GoogleDataOutputType.ExportGoogleSheetsRenaud)
+            {
+                var googleData = FetchGoogleData();
+                ExportGoogleSheetsRenaud(googleData);
+            }
+        }
+
+        public static void ExportExcelRenaud(Dictionary<int, (RunReportResponse classicMetrics, RunReportResponse webperfMetrics)> googleData)
+        {
+            var dataExporter = new GoogleDataExporter
+            {
+                googleDataFormater = new RenaudGoogleDataFormater()
+            };
+
+            dataExporter.dataExporters.Add(new RenaudExcelDataExporter());
+            dataExporter.Export(googleData);
+        }
+
+        public static void ExportGoogleSheetsRenaud(Dictionary<int, (RunReportResponse classicMetrics, RunReportResponse webperfMetrics)> googleData)
+        {
+            var dataExporter = new GoogleDataExporter
+            {
+                googleDataFormater = new RenaudGoogleDataFormater()
+            };
+
+            var excelExporter = new RenaudExcelDataExporter();
+            dataExporter.dataExporters.Add(excelExporter);
+            dataExporter.Export(googleData);
+
+            var sheetService = ExportDriveRenaud.ConnectToGoogle();
+            ExportDriveRenaud.ExportDataFromExcelToGoogleSheet(sheetService, @"C:\Users\stagiaireit\Desktop\OOG_GA4_Report.xlsx");
+        }
+
+        public static Dictionary<int, (RunReportResponse classicMetrics, RunReportResponse webperfMetrics)> FetchGoogleData()
+        {
+            var googleFetcher = new GoogleDataFetcher();
+            googleFetcher.startDate = "2025-06-23";
+            googleFetcher.endDate = "2025-06-24";
+
+            return googleFetcher.Fetch();
         }
 
         public static void ExportToWebServiceSage(RunReportResponse countryData, int countryId)
@@ -45,35 +88,12 @@ namespace GoogleAnalytics4
             }
         }
 
-
-        public static Dictionary<int, (RunReportResponse general, RunReportResponse webperf)> FetchGoogleData()
-        {
-            var googleFetcher = new GoogleDataFetcher();
-            googleFetcher.startDate = "2025-06-01";
-            googleFetcher.endDate = "2025-06-18";
-            return googleFetcher.Fetch();
-        }
-
-        public static void ExportExcelRenaud(Dictionary<int, (RunReportResponse general, RunReportResponse webperf)> googleData)
-        {
-            var dataExporter = new GoogleDataExporter
-            {
-                googleDataFormater = new RenaudGoogleDataFormater()
-            };
-
-            dataExporter.dataExporters.Add(new RenaudExcelDataExporter());
-
-            dataExporter.Export(googleData);
-        }
-
-
-
         public static Dictionary<int, RunReportResponse> FetchSageGoogleData()
         {
             var googleFetcher = new GoogleDataFetcher
             {
-                startDate = "2025-06-01",
-                endDate = "2025-06-18"
+                startDate = "2025-06-23",
+                endDate = "2025-06-24"
             };
 
             return googleFetcher.FetchDataForSage();

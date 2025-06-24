@@ -1,19 +1,20 @@
-﻿using Google.Analytics.Data.V1Beta;
+﻿
+using Google.Analytics.Data.V1Beta;
 
 namespace GoogleAnalytics4
 {
     class GoogleDataFetcher
     {
-        private const string oogardenFranceId = "XXXXXXXXX";
-        private const string oogardenAllemagneId = "XXXXXXXXX";
-        private const string oogardenBelgiqueId = "XXXXXXXXX";
+        private const string oogardenFranceId = "xxxxxxxxxxxxxx";
+        private const string oogardenAllemagneId = "xxxxxxxxxxxxxx";
+        private const string oogardenBelgiqueId = "xxxxxxxxxxxxxx";
 
         public string? startDate;
         public string? endDate;
 
         public RunReportResponse FetchClassicExcelMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create();
+            var client = BetaAnalyticsDataClient.Create(); //OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
@@ -26,7 +27,8 @@ namespace GoogleAnalytics4
                     new Metric { Name = "sessions" }
                 }
             };
-            return client.RunReport(request);
+            var result = client.RunReport(request);
+            return result;
         }
 
         public RunReportResponse FetchExcelWebPerfMetrics(string site)
@@ -83,7 +85,7 @@ namespace GoogleAnalytics4
             return client.RunReport(request);
         }
 
-        public Dictionary<int, (RunReportResponse fetchClassicExcelMetrics, RunReportResponse fetchExcelWebPerfMetrics)> Fetch()
+        public Dictionary<int, (RunReportResponse fetchClassicExcelMetrics, RunReportResponse fetchWebPerfExcelMetrics)> Fetch()
         {
             return new Dictionary<int, (RunReportResponse, RunReportResponse)>
             {
