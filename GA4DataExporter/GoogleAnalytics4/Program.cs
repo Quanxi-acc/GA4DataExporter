@@ -23,9 +23,11 @@ namespace GoogleAnalytics4
             GoogleDataFetcher.SageStartDate = sageStartDate;
             GoogleDataFetcher.SageEndDate = sageEndDate;
             
-          // command.outputType = GoogleDataOutputType.ExportExcelRenaud;         // Export vers Excel uniquement
-             command.outputType = GoogleDataOutputType.ExportGoogleSheetsRenaud;  // Export vers Excel puis Google Sheets
-          // command.outputType = GoogleDataOutputType.ExportWebServiceSage;      // Export vers Sage
+        //  command.outputType = GoogleDataOutputType.ExportExcelRenaud;            /* Export vers Excel uniquement */
+
+            command.outputType = GoogleDataOutputType.ExportGoogleSheetsRenaud;     /* Export vers Excel puis Google Sheets */
+
+        //  command.outputType = GoogleDataOutputType.ExportWebServiceSage;         /* Export vers Sage */
 
             command.Execute();
 
