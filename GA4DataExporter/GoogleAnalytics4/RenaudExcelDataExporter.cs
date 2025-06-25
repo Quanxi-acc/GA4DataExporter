@@ -15,6 +15,7 @@ namespace GoogleAnalytics4
         public void Export(Dictionary<int, IGoogleRecord> dataFormatedByCountry)
         {
             var file = new XLWorkbook();
+
             var sheet = file.Worksheets.Add("Rapport");
 
             int currentRow = 1;
