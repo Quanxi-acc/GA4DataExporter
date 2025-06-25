@@ -105,5 +105,10 @@ namespace ExcelToGoogle
             updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.USERENTERED;
             updateRequest.Execute();
         }
+
+        internal static void ExportDataFromExcelToGoogleSheet(SheetsService sheetService, object pathway)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

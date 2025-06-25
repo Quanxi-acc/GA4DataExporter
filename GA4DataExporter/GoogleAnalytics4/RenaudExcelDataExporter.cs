@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Google.Analytics.Data.V1Beta;
 using System.Globalization;
 
@@ -6,11 +7,11 @@ namespace GoogleAnalytics4
 {
     public class RenaudExcelDataExporter : IDataExporter
     {
-        public void Export(IGoogleRecord data) 
+        public void Export(IGoogleRecord data)
         {
-        
-        }
 
+        }
+        
         public void Export(Dictionary<int, IGoogleRecord> dataFormatedByCountry)
         {
             var file = new XLWorkbook();
@@ -58,7 +59,6 @@ namespace GoogleAnalytics4
                 currentRow++;
 
                 /* Chiffre d'affaire */
-
                 sheet.Cell(currentRow, 1).Value = "Revenue Mobile";
                 sheet.Cell(currentRow, 2).Value = results.RevenueParAppareil.GetValueOrDefault("mobile", 0);
                 currentRow++;
@@ -87,60 +87,46 @@ namespace GoogleAnalytics4
 
                     sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (ms)";
                     double averageServerResponse = results.TotalServerResponseDuration / results.TotalEventCountWebPerf;
-                    sheet.Cell(currentRow, 2).Value = (averageServerResponse/1000);
+                    sheet.Cell(currentRow, 2).Value = (averageServerResponse / 1000);
                     currentRow++;
-
 
                     currentRow++;
 
                     /* LoadDuration moyens */
                     sheet.Cell(currentRow, 1).Value = "Vitesse du site Mobile / WebPerf Mobile (s)";
                     double averageMobile = results.LoadDurationParAppareil.GetValueOrDefault("mobile", 0) / results.EventCountWebPerfParAppareil.GetValueOrDefault("mobile", 0);
-                    sheet.Cell(currentRow, 2).Value = (averageMobile/1000);
+                    sheet.Cell(currentRow, 2).Value = (averageMobile / 1000);
                     currentRow++;
-
 
                     sheet.Cell(currentRow, 1).Value = "Vitesse du site Desktop / WebPerf Desktop (s)";
                     double averageDesktop = results.LoadDurationParAppareil.GetValueOrDefault("desktop", 0) / results.EventCountWebPerfParAppareil.GetValueOrDefault("desktop", 0);
                     sheet.Cell(currentRow, 2).Value = (averageDesktop / 1000);
                     currentRow++;
 
-
                     sheet.Cell(currentRow, 1).Value = "Vitesse du site Tablet / WebPerf Tablet (s)";
                     double averageTablet = results.LoadDurationParAppareil.GetValueOrDefault("tablet", 0) / results.EventCountWebPerfParAppareil.GetValueOrDefault("tablet", 0);
-                    sheet.Cell(currentRow, 2).Value = (averageTablet/1000);
+                    sheet.Cell(currentRow, 2).Value = (averageTablet / 1000);
                     currentRow++;
 
-
-                    sheet.Cell(currentRow, 1).Value =  "Vitesse du site Total / WebPerf Total (s)";
-                    double averageLoadDuration =  results.TotalLoadDuration / results.TotalEventCountWebPerf ;
-                    sheet.Cell(currentRow, 2).Value = (averageLoadDuration/1000);
+                    sheet.Cell(currentRow, 1).Value = "Vitesse du site Total / WebPerf Total (s)";
+                    double averageLoadDuration = results.TotalLoadDuration / results.TotalEventCountWebPerf;
+                    sheet.Cell(currentRow, 2).Value = (averageLoadDuration / 1000);
                     currentRow++;
                 }
             }
-                       
+
             sheet.Range("A2:B21").Style.Fill.SetBackgroundColor(XLColor.FromArgb(174, 196, 210));    /* Couleur Bleu -- France */
-
             sheet.Range("A23:B34").Style.Fill.SetBackgroundColor(XLColor.FromArgb(231, 175, 184));   /* Couleur Rouge -- Allemagne */
-
             sheet.Range("A37:B48").Style.Fill.SetBackgroundColor(XLColor.FromArgb(238, 234, 156));   /* Couleur Jaune -- Belgique */
 
-
+            
             sheet.Range("A2:B15").Style.NumberFormat.SetFormat("# ### ### 000.00");                  /* Format séparateur de milliers */
-         
             sheet.Range("A16:B16").Style.NumberFormat.SetFormat("0.00");                             /* Format séparateur de milliers */
-          
             sheet.Range("A17:B48").Style.NumberFormat.SetFormat("# ### ### ##0.00");                 /* Format séparateur de milliers */
-
 
             sheet.Columns().AdjustToContents();
 
             file.SaveAs(@"C:\Users\stagiaireit\Desktop\OOG_GA4_Report.xlsx");
-        }
-
-        internal void Export(Dictionary<int, (RunReportResponse generalMetrics, RunReportResponse webperfMetrics)> googleData)
-        {
-            throw new NotImplementedException();
         }
 
         private string SwitchIdToCountryName(int siteId)
@@ -153,6 +139,5 @@ namespace GoogleAnalytics4
                 _ => "Rien"
             };
         }
-
     }
 }

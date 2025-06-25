@@ -1,25 +1,26 @@
-﻿
-using Google.Analytics.Data.V1Beta;
+﻿using Google.Analytics.Data.V1Beta;
 
 namespace GoogleAnalytics4
 {
     class GoogleDataFetcher
     {
-        private const string oogardenFranceId = "xxxxxxxxxxxxxx";
-        private const string oogardenAllemagneId = "xxxxxxxxxxxxxx";
-        private const string oogardenBelgiqueId = "xxxxxxxxxxxxxx";
+        private const string oogardenFranceId = "xxxxxxxxxxx";
+        private const string oogardenAllemagneId = "xxxxxxxxxx";
+        private const string oogardenBelgiqueId = "xxxxxxxxxx";
 
-        public string? startDate;
-        public string? endDate;
+        public static string SageStartDate { get; set; }
+        public static string SageEndDate { get; set; }
+        public static string DriveStartDate { get; set; }
+        public static string DriveEndDate { get; set; }
 
         public RunReportResponse FetchClassicExcelMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create(); //OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
+            var client = BetaAnalyticsDataClient.Create(); // OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
                 Dimensions = { new Dimension { Name = "deviceCategory" } },
-                DateRanges = { new DateRange { StartDate = startDate, EndDate = endDate } },
+                DateRanges = { new DateRange { StartDate = DriveStartDate, EndDate = DriveEndDate } },
                 Metrics =
                 {
                     new Metric { Name = "screenPageViews" },
@@ -27,18 +28,17 @@ namespace GoogleAnalytics4
                     new Metric { Name = "sessions" }
                 }
             };
-            var result = client.RunReport(request);
-            return result;
+            return client.RunReport(request);
         }
 
         public RunReportResponse FetchExcelWebPerfMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create();
+            var client = BetaAnalyticsDataClient.Create(); // OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
                 Dimensions = { new Dimension { Name = "deviceCategory" } },
-                DateRanges = { new DateRange { StartDate = startDate, EndDate = endDate } },
+                DateRanges = { new DateRange { StartDate = DriveStartDate, EndDate = DriveEndDate } },
                 DimensionFilter = new FilterExpression
                 {
                     Filter = new Filter
@@ -66,15 +66,14 @@ namespace GoogleAnalytics4
             return client.RunReport(request);
         }
 
-
         public RunReportResponse FetchSageMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create();
+            var client = BetaAnalyticsDataClient.Create(); // OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
             var request = new RunReportRequest
-            {   
+            {
                 Property = "properties/" + site,
                 Dimensions = { new Dimension { Name = "deviceCategory" } },
-                DateRanges = { new DateRange { StartDate = startDate, EndDate = endDate } },
+                DateRanges = { new DateRange { StartDate = SageStartDate, EndDate = SageEndDate } },
                 Metrics =
                 {
                     new Metric { Name = "bounceRate" },

@@ -7,11 +7,9 @@ namespace GoogleAnalytics4
         public IGoogleDataFormater googleDataFormater;
 
         public List<IDataExporter> dataExporters = new List<IDataExporter>();
-
         public void Export((RunReportResponse general, RunReportResponse webperf) reportResponses)
         {
             var data = googleDataFormater.Format(reportResponses.general, reportResponses.webperf);
-
             foreach (var exporter in dataExporters)
             {
                 exporter.Export(data);
