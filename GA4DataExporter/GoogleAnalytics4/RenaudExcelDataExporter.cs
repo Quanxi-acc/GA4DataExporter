@@ -1,6 +1,8 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Google.Analytics.Data.V1Beta;
+using Google.Type;
 using System.Globalization;
 
 namespace GoogleAnalytics4
@@ -94,7 +96,7 @@ namespace GoogleAnalytics4
                     sheet.Cell(currentRow, 2).Value = results.TotalServerResponseDuration;
                     currentRow++;
 
-                    sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (ms)";
+                    sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (s)";
                     double averageServerResponse = results.TotalServerResponseDuration / results.TotalEventCountWebPerf;
                     sheet.Cell(currentRow, 2).Value = (averageServerResponse / 1000);
                     currentRow++;
@@ -206,7 +208,7 @@ namespace GoogleAnalytics4
                     sheet.Cell(currentRow, 2).Value = results.TotalServerResponseDuration;
                     currentRow++;
 
-                    sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (ms)";
+                    sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (s)";
                     double averageServerResponse = results.TotalServerResponseDuration / results.TotalEventCountWebPerf;
                     sheet.Cell(currentRow, 2).Value = (averageServerResponse / 1000);
                     currentRow++;
@@ -318,7 +320,7 @@ namespace GoogleAnalytics4
                     sheet.Cell(currentRow, 2).Value = results.TotalServerResponseDuration;
                     currentRow++;
 
-                    sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (ms)";
+                    sheet.Cell(currentRow, 1).Value = "Temps réponse serveur / WebPerf Total (s)";
                     double averageServerResponse = results.TotalServerResponseDuration / results.TotalEventCountWebPerf;
                     sheet.Cell(currentRow, 2).Value = (averageServerResponse / 1000);
                     currentRow++;
@@ -468,6 +470,7 @@ namespace GoogleAnalytics4
             sheet.Range("A16:B16").Style.NumberFormat.SetFormat("0.00");                             /* Format séparateur de milliers */
             sheet.Range("A17:B48").Style.NumberFormat.SetFormat("# ### ### ##0.00");                 /* Format séparateur de milliers */
 
+
             sheet.Columns().AdjustToContents();
         }
 
@@ -483,3 +486,4 @@ namespace GoogleAnalytics4
         }
     }
 }
+
