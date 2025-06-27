@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Google.Apis.Auth.OAuth2;
+﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using System.IO;
-using System.Threading;
-using Newtonsoft.Json;
+
 using Aspose.Cells;
 
 namespace ExcelToGoogle
@@ -104,11 +100,6 @@ namespace ExcelToGoogle
             var updateRequest = sheetService.Spreadsheets.Values.Update(valueRange, spreadsheetId, range);
             updateRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.USERENTERED;
             updateRequest.Execute();
-        }
-
-        internal static void ExportDataFromExcelToGoogleSheet(SheetsService sheetService, object pathway)
-        {
-            throw new NotImplementedException();
         }
     }
 }

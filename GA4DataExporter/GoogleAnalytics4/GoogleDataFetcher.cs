@@ -1,26 +1,28 @@
-﻿using Google.Analytics.Data.V1Beta;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Google.Analytics.Data.V1Beta;
 
 namespace GoogleAnalytics4
 {
     class GoogleDataFetcher
     {
-        private const string oogardenFranceId = "xxxxxxxxxxx";
-        private const string oogardenAllemagneId = "xxxxxxxxxx";
-        private const string oogardenBelgiqueId = "xxxxxxxxxx";
+        private static GoogleAnalytics4Settings settings = new GoogleAnalytics4Settings();
 
-        public static string SageStartDate { get; set; }
-        public static string SageEndDate { get; set; }
-        public static string DriveStartDate { get; set; }
-        public static string DriveEndDate { get; set; }
+        private  string oogardenFranceId = settings.OOGardenFranceId;
+        private  string oogardenAllemagneId = settings.OOGardenAllemagneId;
+        private  string oogardenBelgiqueId = settings.OOGardenBelgiqueId;
+
+        public static string StartDate { get; set; }
+        public static string EndDate { get; set; }
+
 
         public RunReportResponse FetchClassicExcelMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create(); // OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
+            var client = BetaAnalyticsDataClient.Create(); /* OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS */
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
                 Dimensions = { new Dimension { Name = "deviceCategory" } },
-                DateRanges = { new DateRange { StartDate = DriveStartDate, EndDate = DriveEndDate } },
+                DateRanges = { new DateRange { StartDate = StartDate, EndDate = EndDate } },
                 Metrics =
                 {
                     new Metric { Name = "screenPageViews" },
@@ -33,12 +35,12 @@ namespace GoogleAnalytics4
 
         public RunReportResponse FetchExcelWebPerfMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create(); // OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
+            var client = BetaAnalyticsDataClient.Create(); /* OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS */
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
                 Dimensions = { new Dimension { Name = "deviceCategory" } },
-                DateRanges = { new DateRange { StartDate = DriveStartDate, EndDate = DriveEndDate } },
+                DateRanges = { new DateRange { StartDate = StartDate, EndDate = EndDate } },
                 DimensionFilter = new FilterExpression
                 {
                     Filter = new Filter
@@ -68,12 +70,12 @@ namespace GoogleAnalytics4
 
         public RunReportResponse FetchSageMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create(); // OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS
+            var client = BetaAnalyticsDataClient.Create(); /* OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS */
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
                 Dimensions = { new Dimension { Name = "deviceCategory" } },
-                DateRanges = { new DateRange { StartDate = SageStartDate, EndDate = SageEndDate } },
+                DateRanges = { new DateRange { StartDate = StartDate, EndDate = EndDate } },
                 Metrics =
                 {
                     new Metric { Name = "bounceRate" },
@@ -84,8 +86,11 @@ namespace GoogleAnalytics4
             return client.RunReport(request);
         }
 
-        public Dictionary<int, (RunReportResponse fetchClassicExcelMetrics, RunReportResponse fetchWebPerfExcelMetrics)> Fetch()
+        public Dictionary<int, (RunReportResponse fetchClassicExcelMetrics, RunReportResponse fetchWebPerfExcelMetrics)> Fetch(string startDate, string endDate)
         {
+            StartDate = startDate;
+            EndDate = endDate;
+
             return new Dictionary<int, (RunReportResponse, RunReportResponse)>
             {
                 { 1, (FetchClassicExcelMetrics(oogardenFranceId), FetchExcelWebPerfMetrics(oogardenFranceId)) },
@@ -94,8 +99,11 @@ namespace GoogleAnalytics4
             };
         }
 
-        public Dictionary<int, RunReportResponse> FetchDataForSage()
+        public Dictionary<int, RunReportResponse> FetchDataForSage(string startDate, string endDate)
         {
+            StartDate = startDate;
+            EndDate = endDate;
+
             return new Dictionary<int, RunReportResponse>
             {
                 { 1, FetchSageMetrics(oogardenFranceId) },

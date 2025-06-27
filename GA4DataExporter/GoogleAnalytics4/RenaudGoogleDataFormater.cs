@@ -1,5 +1,4 @@
 ﻿using Google.Analytics.Data.V1Beta;
-using System.Globalization;
 
 namespace GoogleAnalytics4
 {
