@@ -1,5 +1,7 @@
 ﻿using ExcelToGoogle;
 using Google.Analytics.Data.V1Beta;
+using Google.Apis.Auth.OAuth2;
+using Grpc.Net.Client;
 
 
 namespace GoogleAnalytics4
@@ -49,7 +51,7 @@ namespace GoogleAnalytics4
             for(int i = 0; i < (EndDate - StartDate).TotalDays; i++)
             {
                 googleData = FetchGoogleData(StartDate.AddDays(i));
-                ExportExcelRenaud(googleData, i == 0 ? "Jour à jour" : null, $"{StartDate.AddDays(i):MM-dd}");
+                ExportExcelRenaud(googleData, i == 0 ? "Journalier" : null, $"{StartDate.AddDays(i):MM-dd}");
             }
         }
 

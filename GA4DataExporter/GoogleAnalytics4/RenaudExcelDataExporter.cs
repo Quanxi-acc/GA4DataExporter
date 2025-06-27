@@ -37,7 +37,7 @@ namespace GoogleAnalytics4
         public void Export(Dictionary<int, IGoogleRecord> dataFormatedByCountry)
         {
 
-            GenerateMainReport(file, dataFormatedByCountry);    
+            GenerateMainReport(file, dataFormatedByCountry);
 
             file.SaveAs(settings.OutputExcelFilePath);
         }

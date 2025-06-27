@@ -55,7 +55,7 @@ namespace ExcelToGoogle
 
             foreach (var sheet in wb.Worksheets)
             {
-                string range = $"{sheet.Name}!A:Z";
+                string range = $"{sheet.Name}!A:AH";
 
                 if (sheet.Index > 0)
                 {
@@ -82,7 +82,7 @@ namespace ExcelToGoogle
             return sheetsService.Spreadsheets.Create(new Spreadsheet()
             {
                 Properties = new SpreadsheetProperties() { Title = spreadsheetName },
-                Sheets = new List<Sheet>() { new Sheet() { Properties = new SheetProperties() { Title = defaultSheetName } } }
+                Sheets = new List<Sheet>() { new Sheet() { Properties = new SheetProperties() { Title = defaultSheetName, GridProperties = new GridProperties() { ColumnCount = 35 } } } }
             }).Execute();
         }
 
@@ -90,7 +90,7 @@ namespace ExcelToGoogle
         {
             sheetsService.Spreadsheets.BatchUpdate(new BatchUpdateSpreadsheetRequest()
             {
-                Requests = new List<Request>() { new Request() { AddSheet = new AddSheetRequest() { Properties = new SheetProperties() { Title = sheetName } } } }
+                Requests = new List<Request>() { new Request() { AddSheet = new AddSheetRequest() { Properties = new SheetProperties() { Title = sheetName, GridProperties = new GridProperties() { ColumnCount = 35} } } } }
             }, spreadSheetId).Execute();
         }
 

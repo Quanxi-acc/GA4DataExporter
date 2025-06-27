@@ -1,5 +1,8 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using Google.Analytics.Data.V1Beta;
+using Google.Apis.Auth.OAuth2;
+using Grpc.Auth;
+using Grpc.Net.Client;
 
 namespace GoogleAnalytics4
 {
@@ -13,11 +16,22 @@ namespace GoogleAnalytics4
 
         public static string StartDate { get; set; }
         public static string EndDate { get; set; }
-
+        public static string GoogleCredentialURL { get; set; }
+        public static string GrpcChannellURL { get; set; }
 
         public RunReportResponse FetchClassicExcelMetrics(string site)
-        {
-            var client = BetaAnalyticsDataClient.Create(); /* OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS */
+        { 
+            string credentialsPath = settings.GoogleSecretJSON; 
+
+            GoogleCredential credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(settings.GoogleCredentialURL);
+
+            var channel = GrpcChannel.ForAddress(settings.GrpcChannellURL, new GrpcChannelOptions
+            {
+                Credentials = credential.ToChannelCredentials()
+            });
+            var client = BetaAnalyticsDataClient.Create();
+
+
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
@@ -35,7 +49,17 @@ namespace GoogleAnalytics4
 
         public RunReportResponse FetchExcelWebPerfMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create(); /* OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS */
+            string credentialsPath = settings.GoogleSecretJSON;
+
+            GoogleCredential credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(settings.GoogleCredentialURL);
+
+            var channel = GrpcChannel.ForAddress(settings.GrpcChannellURL, new GrpcChannelOptions
+            {
+                Credentials = credential.ToChannelCredentials()
+            });
+            var client = BetaAnalyticsDataClient.Create(); 
+            
+
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,
@@ -70,7 +94,16 @@ namespace GoogleAnalytics4
 
         public RunReportResponse FetchSageMetrics(string site)
         {
-            var client = BetaAnalyticsDataClient.Create(); /* OAuth par variable d'environnement GOOGLE_APPLICATION_CREDENTIALS */
+            string credentialsPath = settings.GoogleSecretJSON;
+
+            GoogleCredential credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(settings.GoogleCredentialURL);
+
+            var channel = GrpcChannel.ForAddress(settings.GrpcChannellURL, new GrpcChannelOptions
+            {
+                Credentials = credential.ToChannelCredentials()
+            });
+            var client = BetaAnalyticsDataClient.Create();
+
             var request = new RunReportRequest
             {
                 Property = "properties/" + site,

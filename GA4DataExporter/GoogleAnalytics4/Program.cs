@@ -1,4 +1,9 @@
 ﻿
+using Google.Analytics.Data.V1Beta;
+using Google.Apis.Auth.OAuth2;
+using Grpc.Auth;
+using Grpc.Net.Client;
+
 namespace GoogleAnalytics4
 {
     class ExportExcelDataToDriveForRenaud
@@ -28,6 +33,9 @@ namespace GoogleAnalytics4
                     command.outputType = GoogleDataOutputType.ExportExcelRenaud;            /* Export vers Excel uniquement */
                     break;
                 case "Googlesheets":
+                    month = args[1];
+                    command.StartDate = DateTime.Parse(month);
+                    command.EndDate = DateTime.Parse(month).LastDayOfMonth();
                     command.outputType = GoogleDataOutputType.ExportGoogleSheetsRenaud;     /* Export vers Excel puis Google Sheets */
                     break;
                 default:
@@ -42,3 +50,5 @@ namespace GoogleAnalytics4
         }
     }
 }
+
+

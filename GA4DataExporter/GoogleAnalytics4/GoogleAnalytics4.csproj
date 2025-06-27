@@ -17,7 +17,7 @@
 		<PackageReference Include="ClosedXML" Version="0.105.0" />
 		<PackageReference Include="Google.Apis.Auth" Version="1.70.0" />
 		<PackageReference Include="Google.Apis.Drive.v3" Version="1.69.0.3783" />
-		<PackageReference Include="Google.Apis.Sheets.v4" Version="1.70.0.3806" />
+		<PackageReference Include="Google.Apis.Sheets.v4" Version="1.70.0.3819" />
 		<PackageReference Include="Google.Analytics.Data.V1Beta" Version="2.0.0-beta09" />
 		
 	</ItemGroup>
